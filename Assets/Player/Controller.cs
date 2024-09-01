@@ -39,7 +39,7 @@ public class Controller : MonoBehaviour
             {
                 walkInput = true;
             }
-            if (Input.GetMouseButton(1))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
                 moveSpeed = runSpeed;
                 runOn = true;
@@ -71,7 +71,7 @@ public class Controller : MonoBehaviour
             if (Input.GetButtonDown("Jump"))
             {
                 playerRb.velocity = Vector3.up * 10;
-                _animator.SetBool("jumpOn", true);
+                //_animator.SetBool("jumpOn", true);
                 jumpOn = true;
                 walkInput = false;
                 onGround = false;
@@ -109,8 +109,8 @@ public class Controller : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         // Colliderが地面に触れた時
-        if (other.gameObject.CompareTag("Ground"))
-        {
+        //if (other.gameObject.CompareTag("Ground"))
+       
             if (rightGround.CheckGroundStatus() || leftGround.CheckGroundStatus())
             {
                 // 左右の足どちらかが接地判定になった場合jumpモーションをやめ接地する
@@ -124,6 +124,8 @@ public class Controller : MonoBehaviour
                 onGround = false;
                 flying = true;
             }
-        }
+
+
+        
     }
 }
