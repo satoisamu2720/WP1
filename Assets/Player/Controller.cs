@@ -45,6 +45,14 @@ public class playerMove : MonoBehaviour
         moveZ = cameraForward * Input.GetAxis("Vertical") * speed;  //　前後（カメラ基準）　 
         moveX = Camera.main.transform.right * Input.GetAxis("Horizontal") * speed; // 左右（カメラ基準）
 
+
+        //// カメラ向きを基準にした正面方向のベクトル
+        //Vector3 subcameraForward = Vector3.Scale(Camera.sub.transform.forward, new Vector3(1, 0, 1)).normalized;
+
+        //// 前後左右入力（WASDキー）ベクトル計算
+        //moveZ = subcameraForward * Input.GetAxis("Vertical") * speed;  //　前後（カメラ基準）　 
+        //moveX = Camera.sub.transform.right * Input.GetAxis("Horizontal") * speed; // 左右（カメラ基準）
+
         // 地面にいるか判定
         if (con.isGrounded)
         {

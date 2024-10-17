@@ -1,22 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Camera_Tracking : MonoBehaviour
 {
-    public GameObject playerObject;         //追尾 オブジェクト
+    public GameObject playerObject;   //追尾 オブジェクト
+    
     public Vector2 rotationSpeed;           //回転速度
     private Vector3 lastMousePosition;      //最後のマウス座標
     private Vector3 lastTargetPosition;     //最後の追尾オブジェクトの座標
 
 
     private float zoom;
+    public bool mainCameraFlag = true;
+    public bool sabCameraFlag = false;
+
 
     void Start()
     {
         zoom = 0.0f;
         lastMousePosition = Input.mousePosition;
-        lastTargetPosition = playerObject.transform.position;
+        if (mainCameraFlag)
+        {
+            lastTargetPosition = playerObject.transform.position;
+        }
     }
 
     void Update()
@@ -24,8 +32,13 @@ public class Camera_Tracking : MonoBehaviour
 
         Rotate();
         Zoom();
-    }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            sabCameraFlag = true;
+            mainCameraFlag = false;
+        }
+    }
 
     void Rotate()
     {
