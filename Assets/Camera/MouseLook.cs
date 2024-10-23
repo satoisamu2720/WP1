@@ -7,6 +7,7 @@ public class MouseLook : MonoBehaviour
     public float mouseSensitivity;  //感度
     public Transform player;
     private float xRotation = 0f;
+    private float yRotation = 0f;
 
     void Start()
     {
@@ -21,12 +22,10 @@ public class MouseLook : MonoBehaviour
 
         // 上下運動
         xRotation -= mouseY;
+        yRotation += mouseX;
 
         // 上下運動（移動できる角度）に制限を加える。
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
-        // 左右運動
-        player.Rotate(Vector3.up * mouseX);
+        transform.localRotation = Quaternion.Euler(xRotation, yRotation,0f );
     }
 }

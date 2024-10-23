@@ -26,7 +26,7 @@ public class playerMove : MonoBehaviour
 
     Vector3 startPos;
 
-    
+
 
     void Start()
     {
@@ -69,7 +69,7 @@ public class playerMove : MonoBehaviour
             moveDirection = moveZ + moveX + new Vector3(0, moveDirection.y, 0);
             moveDirection.y -= gravity * Time.deltaTime;
         }
- 
+
         // 移動アニメーション
         anim.SetFloat("MoveSpeed", (moveZ + moveX).magnitude);
 
