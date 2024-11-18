@@ -15,6 +15,7 @@ public class Camera_Tracking : MonoBehaviour
     private float zoom;
     public bool mainCameraFlag = true;
     public bool sabCameraFlag = false;
+   
 
 
     void Start()
@@ -37,6 +38,7 @@ public class Camera_Tracking : MonoBehaviour
         {
             sabCameraFlag = true;
             mainCameraFlag = false;
+           
         }
     }
 
