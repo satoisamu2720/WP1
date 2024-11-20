@@ -9,11 +9,14 @@ public class LockOn : MonoBehaviour
     public Image aimImage;
     private Camera FPSCamera;
     private Color originalColor;
+   
 
+   
     void Start()
     {
         FPSCamera = GetComponent<Camera>();
         originalColor = aimImage.color;
+       
     }
 
     void Update()
@@ -25,27 +28,22 @@ public class LockOn : MonoBehaviour
         {
             string hitTag = hit.transform.gameObject.tag;
 
-            //if (hitTag == "Target")
-            //{
-
-            //}
-            //else
-            //{
-            //    aimImage.color = originalColor;
-            //}
             if (hit.collider.tag == "Target")
             {
                 // 赤色に変更
                 aimImage.color = new Color(1.0f, 0f, 0f, 1.0f);
                
+
             }
             if (hit.collider.tag != "Target")
             {
                 // 赤色に変更
                 aimImage.color = originalColor;
-
+               
             }
 
         }
     }
+
+
 }

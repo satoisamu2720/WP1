@@ -28,7 +28,8 @@ public class MouseLook : MonoBehaviour
             yRotation += mouseX;
 
             // 上下運動（移動できる角度）に制限を加える。
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            xRotation = Mathf.Clamp(xRotation, -60f, 45f);
+            yRotation = Mathf.Clamp(yRotation, -90f, 90f);
             transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
         }
     }

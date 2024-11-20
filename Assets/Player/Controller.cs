@@ -29,8 +29,9 @@ public class playerMove : MonoBehaviour
     public Animator anim;
     public Camera subCamera;
     public Camera mainCamera;
-    cameraChange cameraChange;
 
+    cameraChange cameraChange;
+    HookLock Target;
 
 
     float normalSpeed = 5f; // 通常時の移動速度
@@ -135,7 +136,8 @@ public class playerMove : MonoBehaviour
                 break;
 
             case State.FlyingPlayer: // プレーヤーが空中移動の時
-                HookFlyingMovement();
+                
+                    HookFlyingMovement();
                 break;
         }
     }
@@ -166,16 +168,27 @@ public class playerMove : MonoBehaviour
     // ★追加（スパイダーフック）
     void HookFlyingMovement()
     {
-        Vector3 moveDir = (hookPoint - transform.position).normalized;
+        if (Target.GetFook())
+        {
+            Vector3 moveDir = (hookPoint - transform.position).normalized;
+            // （テクニック）
+            // 現在地と目的地の距離が遠いほど移動速度が早い（近くなるにつれて減速）
+            float flyingSpeed = Vector3.Distance(transform.position, hookPoint) * 2f;
 
-        // （テクニック）
-        // 現在地と目的地の距離が遠いほど移動速度が早い（近くなるにつれて減速）
-        float flyingSpeed = Vector3.Distance(transform.position, hookPoint) * 2f;
+            con.Move(moveDir * flyingSpeed * Time.deltaTime);
 
-        con.Move(moveDir * flyingSpeed * Time.deltaTime);
-
-        // 目標地点の近くまで来るとフックショットを自動的に隠す
-        if (Vector3.Distance(transform.position, hookPoint) < 2f)
+            // 目標地点の近くまで来るとフックショットを自動的に隠す
+            if (Vector3.Distance(transform.position, hookPoint) < 2f)
+            {
+                // ノーマルモードに移行する
+                state = State.Normal;
+                hookTargetMark.gameObject.SetActive(false);
+                hookShot.gameObject.SetActive(false);
+                subCamera.enabled = false;
+                mainCamera.enabled = true;
+            }
+        }
+        else
         {
             // ノーマルモードに移行する
             state = State.Normal;
@@ -183,7 +196,6 @@ public class playerMove : MonoBehaviour
             hookShot.gameObject.SetActive(false);
             subCamera.enabled = false;
             mainCamera.enabled = true;
-            
         }
     }
 
