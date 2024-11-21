@@ -85,7 +85,7 @@ public class playerMove : MonoBehaviour
             {
                 isClimbingWall = true;
                  // 壁に登っている状態
-                 moveDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical") * wallClimbSpeed, 0); // 上下移動（壁登り）
+                 moveDirection = new Vector3(Input.GetAxis("Horizontal") * wallClimbSpeed, Input.GetAxis("Vertical") * wallClimbSpeed, 0); // 上下移動（壁登り）
                                                                                                    // 指定したベクトルだけ移動させる命令
                 con.Move(moveDirection * Time.deltaTime);
 

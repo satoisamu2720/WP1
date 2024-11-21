@@ -222,10 +222,11 @@ Transform:
   m_GameObject: {fileID: 8840346}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 1.5, z: 5}
+  m_LocalPosition: {x: 12, y: 2.46, z: 5}
   m_LocalScale: {x: 5, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1651795214}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &110672448
@@ -878,6 +879,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &288996622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 288996623}
+  m_Layer: 0
+  m_Name: CameraLock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &288996623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288996622}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.06, z: 0}
+  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 603606585}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &354974880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1075,6 +1107,7 @@ MonoBehaviour:
   jump: 5
   gravity: 9.8
   wallClimbSpeed: 3
+  rayY: 0
   onGround: 1
 --- !u!95 &603606583
 Animator:
@@ -1811,15 +1844,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 13ec5a5e37a25fe45a7671452f67c23b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 13ec5a5e37a25fe45a7671452f67c23b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.302
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 13ec5a5e37a25fe45a7671452f67c23b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.33
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 13ec5a5e37a25fe45a7671452f67c23b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1875,6 +1908,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 13ec5a5e37a25fe45a7671452f67c23b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1807893038}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 13ec5a5e37a25fe45a7671452f67c23b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 288996623}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 13ec5a5e37a25fe45a7671452f67c23b, type: 3}
       insertIndex: -1
@@ -2000,12 +2036,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1651795212}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 1.5, z: 5}
-  m_LocalScale: {x: 5, y: 3, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 8840350}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1677367439
 GameObject:
@@ -2502,10 +2538,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47e8ea532231134b91f8d9ba030fc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 603606581}
+  playerObject: {fileID: 288996622}
   followDelay: 0.32
-  positionOffset: {x: 0, y: 1, z: -6}
+  positionOffset: {x: 0, y: 0.5, z: -2}
   collisionOffset: 0.5
+  rayY: 0
+  rayZ: 0
+  rayLength: 0
 --- !u!4 &2122062553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6275224555868889365, guid: 363327fa80323784f8e1a722647628c9, type: 3}
@@ -2959,4 +2998,3 @@ SceneRoots:
   - {fileID: 7143447645318735063}
   - {fileID: 1677367443}
   - {fileID: 8840350}
-  - {fileID: 1651795214}
