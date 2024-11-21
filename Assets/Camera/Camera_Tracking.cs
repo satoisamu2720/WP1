@@ -5,81 +5,99 @@ using UnityEngine;
 
 public class Camera_Tracking : MonoBehaviour
 {
-    public GameObject playerObject;   //追尾 オブジェクト
-    
-    public Vector2 rotationSpeed;           //回転速度
-    private Vector3 lastMousePosition;      //最後のマウス座標
-    private Vector3 lastTargetPosition;     //最後の追尾オブジェクトの座標
+    public GameObject playerObject;   // 追尾オブジェクト（プレイヤー）
 
+    public Vector2 rotationSpeed;           // 回転速度
+    private Vector3 lastMousePosition;      // 最後のマウス座標
 
-    private float zoom;
     public bool mainCameraFlag = true;
     public bool sabCameraFlag = false;
-   
 
+    public Camera subCamera;               // サブカメラ（追従するカメラ）
+    public Camera mainCamera;
+    private float xRotation = 0f;          // 上下の回転
+    private float yRotation = 0f;          // 左右の回転
+
+    public float mouseSensitivity = 100f;  // マウス感度
+    public float upDownLimit = 60f;        // 上下回転の制限（角度）
+
+    // カメラ位置を調整するためのオフセット
+    public Vector3 cameraOffset = new Vector3(0f, 2.0f, 0f); // 初期位置
 
     void Start()
     {
-        zoom = 0.0f;
         lastMousePosition = Input.mousePosition;
-        if (mainCameraFlag)
+        if (mainCamera.enabled)
         {
-            lastTargetPosition = playerObject.transform.position;
+            // サブカメラはプレイヤーの位置に固定
+           
+            subCamera.transform.position = playerObject.transform.position + cameraOffset;
+            subCamera.transform.rotation = playerObject.transform.rotation;
         }
+
+        // カーソルを隠してロック
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
-
-        Rotate();
-        Zoom();
-
-        if (Input.GetKeyDown(KeyCode.R))
+        if (subCamera.enabled)
         {
-            sabCameraFlag = true;
-            mainCameraFlag = false;
-           
+            // サブカメラを一人称視点に設定
+            RotateCameraWithMouse();
+            FollowPlayer();
+            AdjustCameraPosition(); // カメラ位置調整の処理
+
+        }
+        if (mainCamera.enabled)
+        {
+            FacePlayerDirection(); // プレイヤーの向きを向く
+        
         }
     }
 
-    void Rotate()
+    void RotateCameraWithMouse()
     {
-        transform.position += playerObject.transform.position - lastTargetPosition;
-        lastTargetPosition = playerObject.transform.position;
+        // マウスの動きによる回転処理
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime; // 左右の動き
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime; // 上下の動き
 
-        if (Input.GetMouseButton(1))
-        {
+        // 上下回転
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -upDownLimit, upDownLimit); // 上下の回転制限
 
-            Vector3 nowMouseValue = Input.mousePosition - lastMousePosition;
+        // 左右回転
+        yRotation += mouseX;
 
-            var newAngle = Vector3.zero;
-            newAngle.x = rotationSpeed.x * nowMouseValue.x;
-            newAngle.y = rotationSpeed.y * nowMouseValue.y;
-
-            transform.RotateAround(playerObject.transform.position, Vector3.up, newAngle.x);
-            transform.RotateAround(playerObject.transform.position, transform.right, -newAngle.y);
-        }
-
-        lastMousePosition = Input.mousePosition;
+        // プレイヤーの回転を更新（サブカメラの回転も更新）
+        subCamera.transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
     }
 
-    //拡大縮小
-    void Zoom()
+    void FollowPlayer()
     {
-        zoom = Input.GetAxis("Mouse ScrollWheel");
-        Vector3 offset = new Vector3(0, 0, 0);
-        Vector3 pos = playerObject.transform.position - transform.position;
+        // サブカメラの位置はプレイヤーの位置に固定
+        subCamera.transform.position = playerObject.transform.position + cameraOffset;
+    }
 
-        if (zoom > 0)
-        {
-            offset = pos.normalized * 1;
-        }
-        else if (zoom < 0)
-        {
-            offset = -pos.normalized * 1;
+    void AdjustCameraPosition()
+    {
+        // ユーザー入力でカメラ位置を調整
+        float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * 2f;  // 左右
+        float moveY = Input.GetAxis("Vertical") * Time.deltaTime * 2f;    // 前後
 
-        }
-        transform.position = transform.position + offset;
+        // 位置調整後に再度カメラ位置を設定
+        subCamera.transform.position = playerObject.transform.position + cameraOffset;
+    }
+
+    void FacePlayerDirection()
+    {
+        // プレイヤーの向きに合わせてカメラも回転するようにする
+        Vector3 direction = playerObject.transform.forward; // プレイヤーの向き
+        Quaternion targetRotation = Quaternion.LookRotation(direction); // プレイヤーが向いている方向を向く
+
+        // カメラをプレイヤーの向きに合わせる
+        subCamera.transform.rotation = Quaternion.Slerp(subCamera.transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
 
 }

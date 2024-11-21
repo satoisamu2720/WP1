@@ -6,25 +6,34 @@ public class cameraChange : MonoBehaviour
 {
     public Camera mainCamera;
     public Camera subCamera;
+    
     public GameObject aim;
-    public bool aimFlag;
+    
 
     void Start()
     {
         mainCamera.enabled = true;
         subCamera.enabled = false;
-        aimFlag = false;
     }
 
     void Update()
     {
+       
         if (Input.GetKeyDown(KeyCode.R))
         {
-            mainCamera.enabled = !mainCamera.enabled;
-            subCamera.enabled = !subCamera.enabled;
-            aimFlag = !aimFlag;
+            
+            mainCamera.enabled = false;
+            subCamera.enabled = true;
+            aim.SetActive(true);
+           
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
 
-            aim.SetActive(aimFlag);
+            mainCamera.enabled = true;
+            subCamera.enabled = false;
+            aim.SetActive(false);
+           
         }
     }
 }

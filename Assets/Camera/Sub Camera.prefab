@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3736765702798639086}
   - component: {fileID: 3949446778031465499}
   - component: {fileID: 653451909413329487}
-  - component: {fileID: 7414367479373332363}
   - component: {fileID: 571289923667800120}
   m_Layer: 0
   m_Name: Sub Camera
@@ -111,20 +110,11 @@ MonoBehaviour:
   rotationSpeed: {x: 0, y: 0}
   mainCameraFlag: 1
   sabCameraFlag: 0
---- !u!114 &7414367479373332363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5352783746377365967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fbfb070cd4f79e49810532c17631a4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseSensitivity: 200
-  player: {fileID: 0}
+  subCamera: {fileID: 0}
+  mainCamera: {fileID: 0}
+  mouseSensitivity: 100
+  upDownLimit: 60
+  cameraOffset: {x: 0, y: 2, z: 0}
 --- !u!114 &571289923667800120
 MonoBehaviour:
   m_ObjectHideFlags: 0
